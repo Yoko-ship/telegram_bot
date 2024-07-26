@@ -1,3 +1,4 @@
+from flask import Flask,request
 import google.generativeai as genai
 import telebot
 import PIL.Image,os
@@ -5,7 +6,7 @@ import requests,json
 
 
 
-
+app = Flask(__name__)
 
 api_token ="7184222356:AAHvafd3do_Ozpfy8kw8CaAI7UC-aC5pmg4"
 api_key = "AIzaSyCsbm3paPBslK2g0MW8YwZwD4zpl9H_37Y"
@@ -176,6 +177,26 @@ class Tele_bot:
     def run(self):
         self.bot.infinity_polling()
 
-bot = Tele_bot(api_token)
-bot.run()
+tele_bot = Tele_bot(api_token)
 
+
+@app.route('/')
+def index():
+    return "Telegram bot is running"
+
+@app.route('/webhook',methods=['POST'])
+def webhook():
+    json_str = request.get_data().decode("UTF-8")
+    update = telebot.types.Update.de_json(json_str)
+    bot.process_new_updates([update])
+    return "ok",200
+
+
+def setup_bot():
+    bot = telebot.TeleBot(api_token)
+    bot.remove_webhook()
+    bot.set_webhook(url="https://dashboard.render.com/web/new")
+
+if __name__ == "__main__":
+    setup_bot()
+    app.run(host="0.0.0.0",port=8080)
