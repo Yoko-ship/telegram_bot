@@ -1,4 +1,5 @@
-google-generativeai
+flask
 pyTelegramBotAPI
+google-generativeai
 pillow
 requests
