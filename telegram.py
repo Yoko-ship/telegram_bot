@@ -174,8 +174,8 @@ class Tele_bot:
 
     #* Это чтобы бот мог ответить(Теперь наш бот будет постоянно спрашивать у сервера Телеграмма «Мне кто-нибудь написал?»)'
 
-    # def run(self):
-    #     self.bot.infinity_polling()
+    def run(self):
+        self.bot.infinity_polling()
 
 tele_bot = Tele_bot(api_token)
 
@@ -195,8 +195,11 @@ def webhook():
 
 def setup_bot():
     tele_bot.bot.remove_webhook()
-    tele_bot.bot.set_webhook(url="https://telegram-bot-1486.onrender.com")
+    tele_bot.bot.set_webhook(url="https://telegram-bot-d5c2.onrender.com")
 
 if __name__ == "__main__":
     setup_bot()
+    tele_bot.bot.remove_webhook()
+    tele_bot.run()
     app.run(host="0.0.0.0",port=8080)
+
